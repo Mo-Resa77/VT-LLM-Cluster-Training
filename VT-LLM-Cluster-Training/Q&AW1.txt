@@ -1,0 +1,25 @@
+SFTP:
+- Upload (upload to cluster)
+- Download (Download from cluster to local)
+
+Why not Github?
+- Github is okay to be an interconnector between the Cluster and the Local but it requires a key
+- So for simplicity and easy utilization we directly connect2cluster.
+
+SFTP Extension not showing properly:
+- Settings of the SFTP extension (Add + Download)
+- CTRL+Shift+P (Interpreter) 
+- Open SFTP: Config
+
+First Ensure that we are connected to FortiClient.
+
+______________________________________
+
+Before we get started with the environment we need to make sure that the requirements.txt is already uploaded on the cluster.
+
+______________________________________
+
+How to download data over the cluster?
+- Using datasets library
+
+______________________________________

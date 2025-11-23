@@ -1,0 +1,38 @@
+- Tensors?
+
+- How to study labs?
+    - Walkthrough the labs and try the hands-on
+        - Only pending "caching"
+
+- Lab summary till now (11:30)?
+    - salloc
+        - utils/Recommnder.py\
+            - Output >> ready to use command for Salloc
+    - went to cluster and utilized this Salloc.
+    - pdsh? If u got error with pdsh
+    - explanation train_tiny.py
+        - monkey-patch (CPU) along with imports 
+            - argparse
+        - helpers: vocab build, configuration Bert
+        - argparse for CLIs modularity
+
+    - Why do i use validation data?
+        - Train and test
+        - Train > (Train + Validation)
+            - Training accuracy = 90% while the validation accruacy = 60% (overfitting)
+    
+
+    - train_tiny
+
+    - max_grad_norm (`float`, *optional*, defaults to 1.0):
+            Maximum gradient norm (for gradient clipping).
+
+
+
+- Workflow since entering cluster:
+    - recommend salloc + arguments adjustment
+        - salloc
+    - traning (train.py) + saving the model
+        - build tok + config + argparse + encode + training + training arguments + save model
+    - testing the model
+        - enocde + test

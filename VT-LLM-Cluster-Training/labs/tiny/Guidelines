@@ -1,0 +1,54 @@
+launch_tiny.sh grabs 5 nodes, checks each node can see your project & offline pkgs, prints a torchrun rendezvous line, then starts either training or inference on all nodes.
+
+train_tiny.py builds a tiny BERT, times every step, logs per-rank metrics, runs evaluate() on all ranks, then rank-0 saves the model.
+
+infer_ddp.py loads the saved checkpoint, shards the test set across ranks, runs forward pass, then rank-0 prints one global line with accuracy and throughput.
+
+eval_logs.py reads the SLURM logs and prints a pass/fail report: RDZV, ranks, versions, failures, train throughput + eval acc, and inference acc/throughput.
+
+what each file does
+    launch_tiny.sh (driver)
+
+Preflight: on every node print proj=ok pkgs=ok (or stage to /tmp if missing).
+
+Environment: set caches, PYTHONPATH, CPU-friendly flags (OMP_NUM_THREADS=2, gloo, no tokenizer threads).
+
+Run: srun a tiny wrapper that imports your project and calls either labs/tiny/train_tiny.py or labs/tiny/infer_ddp.py; prints
+torchrun: nnodes=… nproc_per_node=… rdzv=host:port.
+
+    train_tiny.py (DDP training with “science”)
+
+DDP init: prints [RANK r] WORLD_SIZE=w so the evaluator can count ranks.
+
+Metrics: StepTimer prints step_ms / samples_per_sec / tokens_per_sec each step; a wall-clock prints TRAIN_RUNTIME_SEC=…; Trainer.evaluate() runs on all ranks, rank-0 prints EVAL accuracy=….
+
+Save: only rank-0 writes tiny_out/ (model + tokenizer).
+
+    infer_ddp.py (DDP evaluation/throughput)
+
+Shard: each rank gets a slice of the test set (rank::world_size).
+
+Reduce: sum up correct/total/tokens, take max wall time across ranks.
+
+Print (rank-0):
+[RANK 0] INFER global_accuracy=… global_samples_per_sec=… global_tokens_per_sec=….
+
+    eval_logs.py (log parser)
+
+Regexes: grab RDZV, [RANK r] WORLD_SIZE=w, per-node sanity versions, failure keywords, training signals, eval acc, and the single INFER line.
+
+Checks: unique RDZV, ranks 0..WORLD_SIZE-1, version drift, failures.
+
+Report: P50/P95 step time & throughput, train runtime, eval accuracy, inference metrics → Verdict (PASS/CHECK).
+
+>>>>????
+
+evaluate() on all ranks avoids PyTorch Elastic “connection closed by peer / exit barrier” at job end (previous errors you saw). We only print on rank-0.
+
+gloo + modest threads is stable/portable on CPU clusters.
+
+Per-rank printing gives the evaluator enough evidence (ranks, WS, step timings).
+
+Reduce with MAX time in inference → conservative, cluster-wide throughput.
+
+Preflight catches path issues early; staging keeps runs hermetic if home paths aren’t visible.
