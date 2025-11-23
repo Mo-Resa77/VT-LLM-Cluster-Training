@@ -1,0 +1,62 @@
+[22:34, 16/08/2025] +20 10 18878800: bashmohandes dah el error :    Traceback (most recent call last):
+  File "labs/tiny/train_tiny.py", line 19, in <module>
+    from datasets import load_dataset
+  File "/usr/local/lib/python3.8/dist-packages/datasets/_init_.py", line 17, in <module>
+Traceback (most recent call last):
+  File "labs/tiny/train_tiny.py", line 19, in <module>
+    from datasets import load_dataset
+  File "/usr/local/lib/python3.8/dist-packages/datasets/_init_.py", line 17, in <module>
+    from .arrow_dataset import Dataset
+  File "/usr/local/lib/python3.8/dist-packages/datasets/arrow_dataset.py", line 76, in <module>
+    from .arrow_dataset import Dataset
+  File "/usr/local/lib/python3.8/dist-packages/datasets/arrow_dataset.py", line 76, in <module>
+    from .arrow_reader import ArrowReader
+  File "/usr/local/lib/python3.8/dist-packages/datasets/arrow_reader.py", line 30, in <module>
+    from .arrow_reader import ArrowReader
+  File "/usr/local/lib/python3.8/dist-packages/datasets/arrow_reader.py", line 30, in <module>
+    from .download.download_config import DownloadConfig  # noqa: F401
+  File "/usr/local/lib/python3.8/dist-packages/datasets/download/_init_.py", line 9, in <module>
+    from .download.download_config import DownloadConfig  # noqa: F401
+  File "/usr/local/lib/python3.8/dist-packages/datasets/download/_init_.py", line 9, in <module>
+        from .download_manager import DownloadManager, DownloadModefrom .download_manager import DownloadManager, DownloadMode
+
+  File "/usr/local/lib/python3.8/dist-packages/datasets/download/download_manager.py", line 32, in <module>
+  File "/usr/local/lib/python3.8/dist-packages/datasets/download/download_manager.py", line 32, in <module>
+    from ..utils.file_utils import (
+  File "/usr/local/lib/python3.8/dist-packages/datasets/utils/file_utils.py", line 30, in <module>
+    from ..utils.file_utils import (
+  File "/usr/local/lib/python3.8/dist-packages/datasets/utils/file_utils.py", line 30, in <module>
+    import aiohttp.client_exceptions
+    import aiohttp.client_exceptions
+  File "/usr/local/lib/python3.8/dist-packages/aiohttp/_init_.py", line 6, in <module>
+  File "/usr/local/lib/python3.8/dist-packages/aiohttp/_init_.py", line 6, in <module>
+        from .client import (from .client import (
+
+  File "/usr/local/lib/python3.8/dist-packages/aiohttp/client.py", line 71, in <module>
+  File "/usr/local/lib/python3.8/dist-packages/aiohttp/client.py", line 71, in <module>
+        from .client_reqrep import (
+from .client_reqrep import (  File "/usr/local/lib/python3.8/dist-packages/aiohttp/client_reqrep.py", line 218, in <module>
+
+  File "/usr/local/lib/python3.8/dist-packages/aiohttp/client_reqrep.py", line 218, in <module>
+    @attr.s(auto_attribs=True, slots=True, frozen=True, cache_hash=True)
+TypeError: attrs() got an unexpected keyword argument 'cache_hash'
+    @attr.s(auto_attribs=True, slots=True, frozen=True, cache_hash=True)
+TypeError: attrs() got an unexpected keyword argument 'cache_hash'
+[2025-08-16 22:24:14,268] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 14450) of binary: /usr/bin/python3.8
+Traceback (most recent call last):
+  File "/usr/local/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/elastic/multiprocessing/errors/_init_.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/run.py", line 806, in main
+    run(args)
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/run.py", line 797, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.8/dist-packages/torch/distributed/launcher/api.py", line 134, in _call_
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/usr/local/lib/python3.8/dist-packages/to…
+[22:34, 16/08/2025] +20 10 18878800: Your pre-cache one-liner may be using the wrong Python (system 3.8).
+
+You allocated 20 nodes with Slurm, but your torchrun command only launches 2 processes on the current node (the other 19 nodes sit idle).
+
+You previously hit an aiohttp ↔ attrs mismatch—make sure that’s fixed in the same env on every node.

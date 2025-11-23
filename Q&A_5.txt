@@ -1,0 +1,24 @@
+Q: Ahmed hamimi > Environment
+    - Environment (check lab 0 and make sure to activate the existing environment in opt before creating the one we need)
+
+Q: Aly Lotfy > Lab 2:
+    - Ragging/Exporting logs of the outputs and give interpretability.
+
+Q: Chantal & Ahmed > Lab 1 Error:
+    - Timeout problem
+    - Didn't see the files (Requirement mismatch, should use latest requirements.txt)
+
+Q: Mohamed Hagras > Assignments?
+    - will look into it.
+
+Q: Fahd Elgazar > Forticlient issue
+
+Q: Karim Nasser > Assignments:
+    - Slow pace is okay.
+
+Q: Malak Beram > Access the cluster:
+    - if you access by ssh, dont forget to add the @student.aast.edu at the username.
+
+Q: Mario Ashraf > Timeout
+
+Q: Fahd Elgazar > Forticlient Version
